@@ -24,17 +24,4 @@ Write a C program that generates multiplication tables using different loop stru
         <img src="img/A1-2.png" alt="Reversed Table" class="lab-image">
     </div>
 </div>
-
-<h5>SUBMISSION INSTRUCTIONS</h5>
-<p>
-Submit a video screen capture demonstrating:
-</p>
-<ul>
-    <li>CLion and GitBash usage</li>
-    <li>Code review with audio explanation</li>
-    <li>Completion of all Video Submission Checklist items</li>
-</ul>
-<p>
-Post either the video file or a link (e.g. Microsoft Stream) to Brightspace before the deadline.
-</p>
 <?php include_once("components/assign-body-below.php"); mt_srand(); ?>

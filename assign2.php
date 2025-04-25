@@ -39,16 +39,4 @@ Write a C program that identifies leap years with proper validation and displays
         <img src="img/A2-1.png" alt="Leap Year Table Output" class="lab-image" style="max-width: 800px;">
     </div>
 </div>
-
-<h5>SUBMISSION INSTRUCTIONS</h5>
-<ul>
-    <li>Submit video screen capture demonstrating:
-        <ul>
-            <li>CLion and GitBash usage</li>
-            <li>Code review with audio explanation</li>
-            <li>Completion of Video Submission Checklist items</li>
-        </ul>
-    </li>
-    <li>Post video file or link to Brightspace before deadline</li>
-</ul>
 <?php include_once("components/assign-body-below.php"); mt_srand(); ?>
