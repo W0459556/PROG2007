@@ -64,3 +64,4 @@
                     <div class="col-12">
                         <div id='activity-card' class="card">
                             <div class="card-body">
+                            <?php include_once("components/lab_submission_marking.php"); ?>
