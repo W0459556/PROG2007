@@ -1,0 +1,17 @@
+#activity-card {
+    display: none;
+}
+
+.stand-out {
+    background-color: #69CEDD;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.logo-icon img {
+    width: 30px;
+}
+
+.logo-text img {
+    width: 156px;
+}
