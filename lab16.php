@@ -5,14 +5,6 @@
     <title>Prog2007 - Lab 16</title>
     <?php include_once("components/head.php"); mt_srand(); ?>
     <style>
-    .lab-image {
-        width: 100%;
-        height: auto;
-        margin-bottom: 20px;
-    }
-    .image-container {
-        padding: 15px;
-    }
     </style>
 </head>
 
