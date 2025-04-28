@@ -168,7 +168,7 @@ if ($amount >= 6) {
 };
 ?>
 
-Your average for the term is: <?php echo (number_format((float)$average, 2, '.', '')); ?>
+Your average for the term is: <?php echo (number_format((float)$average, 1, '.', '')); ?>
 
 
 Which grade do you want to look up?
