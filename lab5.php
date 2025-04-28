@@ -71,12 +71,13 @@
                             <?php include_once("components/lab_evaluation_instructions.php"); ?>
 
 <h4>Lab 5 - Grades</h4>
+<?php $amount = rand(4,6); ?>
 <p>
 Using the grades arrays examples from the Arrays video as a guide:
 </p>
 
 <p>
-<strong>Ask the user to enter the typical 6 grades for an NSCC term and store them in a one-dimensional array. If they entered 6 good grades, output the term average grade value to one decimal place. Then ask the user for a grade number to display and retrieve and print that value from the array. Do NOT refer to the first grade as "Grade 0" as users do not need to know our arrays start at zero.</strong>
+<strong>Ask the user to enter <span class='stand-out'><?php echo($amount) ?></span> grades for an NSCC term and store them in a one-dimensional array. If they entered <span class='stand-out'><?php echo($amount) ?></span> good grades, output the term average grade value to one decimal place. Then ask the user for a grade number to display and retrieve and print that value from the array. Do NOT refer to the first grade as "Grade 0" as users do not need to know our arrays start at zero.</strong>
 </p>
 
 <p>
@@ -87,7 +88,7 @@ At any point, if the user enters a grade that is negative or greater than 100, o
 <strong>NOTE:</strong> It would be good to use a <strong>preprocessor macro definition</strong> for the size of the array.
 </p>
 
-<h5>Sample Output</h5>
+<h5>Sample Outputs</h5>
 <div class="row">
 <div class="col-lg-5">
 
@@ -125,31 +126,56 @@ You cannot enter grades above 100.
 Process finished with exit code 1</code></pre>
 </div>
 <br />
+<?php
+$grades = [];
 
+// Generate between 4-6 random grades (50-100)
+for ($i = 0; $i < $amount; $i++) {
+    $grades[] = rand(50, 100);
+}
+
+// Calculate average
+$average = array_sum($grades) / count($grades);
+?>
 
 Sample of proper input:
 <div class="bg-dark p-3 text-light">
 <pre><code class="text-light">
 C:\PROG2007\EX5\cmake-build-debug\EX5.exe
 Please enter Grade 1:
-74
-Please enter Grade 2:
-88
-Please enter Grade 3:
-93
-Please enter Grade 4:
-91
-Please enter Grade 5:
-77
-Please enter Grade 6:
-82
+<?php echo ($grades[0]); ?>
 
-Your average for the term is: 84.2
+Please enter Grade 2:
+<?php echo ($grades[1]); ?>
+
+Please enter Grade 3:
+<?php echo ($grades[2]); ?>
+
+Please enter Grade 4:
+<?php echo ($grades[3]); ?>
+
+<?php
+if ($amount >= 5) {
+    echo "Please enter Grade 5:\n";
+    echo ($grades[4]);
+    echo ("\n");
+};
+
+if ($amount >= 6) {
+    echo "Please enter Grade 6:\n";
+    echo ($grades[5]);
+    echo ("\n");
+};
+?>
+
+Your average for the term is: <?php echo (number_format((float)$average, 2, '.', '')); ?>
+
 
 Which grade do you want to look up?
 3
 
-Grade 3: 93
+Grade 3: <?php echo ($grades[2]); ?>
+
 
 Process finished with exit code 0</code></pre>
 </div>
