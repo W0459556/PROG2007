@@ -4,6 +4,52 @@ require_once('/home/breanna/public_html/html/tcpdf/tcpdf.php');
 
 putenv('GDFONTPATH=' . realpath('/var/www/html'));
 
+function createInvertedImage($sourcePath, $destPath) {
+    if (!file_exists($sourcePath)) return false;
+    
+    $ext = strtolower(pathinfo($sourcePath, PATHINFO_EXTENSION));
+    switch ($ext) {
+        case 'png':
+            $image = imagecreatefrompng($sourcePath);
+            break;
+        case 'jpg':
+        case 'jpeg':
+            $image = imagecreatefromjpeg($sourcePath);
+            break;
+        default:
+            return false;
+    }
+    
+    if ($image === false) return false;
+    
+    imagefilter($image, IMG_FILTER_NEGATE);
+    
+    switch ($ext) {
+        case 'png':
+            imagepng($image, $destPath);
+            break;
+        case 'jpg':
+        case 'jpeg':
+            imagejpeg($image, $destPath);
+            break;
+    }
+    
+    imagedestroy($image);
+    return true;
+}
+
+$imageFiles = ['A4-2.png', 'A4-3.png', 'A4-4.png'];
+$invertedImages = [];
+foreach ($imageFiles as $file) {
+    $source = "/home/breanna/public_html/html/prog2007/img/$file";
+    $dest = "/home/breanna/public_html/html/prog2007/img/inverted_$file";
+    
+    if (!file_exists($dest)) {
+        createInvertedImage($source, $dest);
+    }
+    $invertedImages[$file] = "inverted_$file";
+}
+
 function applyShift($char, $shift) {
     $code = ord($char);
     $ranges = [
@@ -26,7 +72,7 @@ function applyShift($char, $shift) {
 }
 
 function generateAssignmentPDF($student_id, $student_name) {
-    global $db;
+    global $invertedImages;
 
     $pdf = new TCPDF(PDF_PAGE_ORIENTATION, 'mm', PDF_PAGE_FORMAT, true, 'UTF-8', false);
     $pdf->SetAuthor('NSCC PROG2007');
@@ -40,12 +86,12 @@ function generateAssignmentPDF($student_id, $student_name) {
     $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
     $pdf->AddPage();
 
-    $content = generateAssignmentContent($student_id, $student_name);
+    $content = generateAssignmentContent($student_id, $student_name, $invertedImages);
     $pdf->writeHTML($content, true, false, true, false, '');
     $pdf->Output("/home/breanna/public_html/html/prog2007/cli/output/$student_id.pdf", 'F');
 }
 
-function generateAssignmentContent($student_id, $student_name) {
+function generateAssignmentContent($student_id, $student_name, $invertedImages) {
     $cipherTable = generateCipherTable();
     
     return <<<HTML
@@ -62,8 +108,8 @@ function generateAssignmentContent($student_id, $student_name) {
 <h4>TASK REQUIREMENTS:</h4>
 <ul>
     <li>Build a program that can encrypt and decrypt text using bit masks and XOR operations</li>
-    <li>Implement a substitution cipher with the following table: <br />
-        $cipherTable <br />
+    <li>Implement a substitution cipher with the following table:
+    <br />$cipherTable<br />
         <ul>
             <li>Convert all input to uppercase before processing</li>
         </ul>
@@ -76,13 +122,13 @@ function generateAssignmentContent($student_id, $student_name) {
 <p><strong>NOTE: Your cipher shift is randomized - your output will differ from these examples</strong></p>
 
 <p><strong>Encrypting a message:</strong></p>
-<img src="../img/A4-2.png" width="585" style="filter: invert(100%);">
+<img src="../img/{$invertedImages['A4-2.png']}" width="585">
 
 <p><strong>Decrypting a message:</strong></p>
-<img src="../img/A4-3.png" width="585" style="filter: invert(100%);">
+<img src="../img/{$invertedImages['A4-3.png']}" width="585">
 
 <p><strong>Bad input example:</strong></p>
-<img src="../img/A4-4.png" width="585" style="filter: invert(100%);">
+<img src="../img/{$invertedImages['A4-4.png']}" width="585">
 
 <h4>Submission Instructions</h4>
 <p>Submit via video recording demonstrating your working program as outlined in Brightspace.</p>
