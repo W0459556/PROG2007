@@ -4,6 +4,78 @@
 <p>PROG 2007: Programming II<br>
 <strong>Due as posted in Brightspace</strong></p>
 
+<?php
+function generateCipherTable() {
+    // Generate random shift between -15 and +15
+    $shift = rand(-15, 15);
+
+    // Define character sets in alphabetical order starting from A
+    $chars = [
+        ['A','B','C','D','E','F','G','H','I','J'],
+        ['K','L','M','N','O','P','Q','R','S','T'],
+        ['U','V','W','X','Y','Z','!','@','#','$'],
+        ['%','&','(',')',':',';','?','.','/',' '],
+        ['0','1','2','3','4','5','6','7','8','9']
+    ];
+
+    // Function to apply shift with wrapping
+    function applyShift($char, $shift) {
+        $code = ord($char);
+        
+        // Define ASCII ranges
+        $ranges = [
+            ['start' => 48, 'end' => 57],   // 0-9
+            ['start' => 65, 'end' => 90],   // A-Z
+            ['start' => 33, 'end' => 47],   // !-/
+            ['start' => 58, 'end' => 64]    // :-@
+        ];
+        
+        foreach ($ranges as $range) {
+            if ($code >= $range['start'] && $code <= $range['end']) {
+                $rangeSize = $range['end'] - $range['start'] + 1;
+                $shiftedCode = $code + $shift;
+                
+                // Wrap around within the range
+                while ($shiftedCode > $range['end']) {
+                    $shiftedCode -= $rangeSize;
+                }
+                while ($shiftedCode < $range['start']) {
+                    $shiftedCode += $rangeSize;
+                }
+                
+                return chr($shiftedCode);
+            }
+        }
+        
+        return $char; // Return unchanged if not in any range
+    }
+
+    $table = '<table class="table table-striped" style="width: auto; margin: 0 auto;">';
+    
+
+    foreach ($chars as $row) {
+        $table .= '<tr>';
+        $table .= '<td><strong>Start</strong></td>';
+        foreach ($row as $char) {
+            $table .= '<td>'.htmlspecialchars($char).'</td>';
+        }
+        $table .= '</tr><tr>';
+        $table .= '<td><strong>Sub</strong></td>';
+        foreach ($row as $char) {
+            $table .= '<td>'.htmlspecialchars(applyShift($char, $shift)).'</td>';
+        }
+        $table .= '</tr>';
+    }
+
+    // Close the table
+    $table .= '</table>';
+
+    return $table;
+}
+
+$cipherTable = generateCipherTable();
+?>
+
 <h5>Task</h5>
 <p>Write a C program that conforms to the requirements listed below.</p>
 <div class="row">
@@ -15,7 +87,7 @@
     <li>For this program we will combine the use of <strong>bit masks</strong> and <strong>bitwise Exclusive Or</strong> operations to produce the results.</li>
     <li><strong>User Interface:</strong> Prompt the user for an operation - either Encrypt or Decrypt, and then for a text string, capture the input, and then do the requested action. See encryption, below.</li>
     <li>Set up an array of printable characters to use in a substitution cipher as one step of the encryption:
-        <img src="img/A4-1.png" alt="Assign 4 Substitution Cypher" class="lab-image mb-0 pb-0">
+        <?php echo($cipherTable) ?>
         <ul>
             <li>Note the table uses capitals. Perform a <strong>toupper</strong> function for each element of the input character array.</li>
         </ul>
@@ -69,6 +141,7 @@
 </ul>
 
 <h5>Sample Outputs:</h5>
+<p><strong>NOTE: your cipher shift is randomised, your encryption will likely look different than those below!</strong></p>
 <p class="mb-0 pb-0">Encrypting a message:</p>
 <img src="img/A4-2.png" alt="Assign 4 Encryption" class="lab-image">
 <p class="mb-0 pb-0">Decrypting the previously encrypted message:</p>
