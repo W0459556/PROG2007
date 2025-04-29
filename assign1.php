@@ -12,7 +12,7 @@
     function generateForLoopTable($max) {
         $table = '';
         
-        $table .= str_pad('N', 5);  // Changed from empty string to 'N'
+        $table .= str_pad('N', 5); 
         for ($i = 1; $i <= $max; $i++) {
             $table .= str_pad($i, 5);
         }
