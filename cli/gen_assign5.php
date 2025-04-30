@@ -122,36 +122,52 @@ function generateAssignmentContent($student_id, $student_name, $invertedImages) 
     <li>Write final results to output file</li>
 </ol>
 
-<h4>SAMPLE OUTPUTS</h4>
 HTML . ($startChar != "underscores (\"_\")" ? 
 "<p><strong>NOTE:</strong> These examples use underscores as the starting character, your program should use $startChar as a starting character.</p>" : "") . <<<HTML
-<p></p><p></p><p></p>
 <p><strong>Input File Example:</strong></p>
-<p><img src="../img/A5-1.png" width="200"></p>
+<table><tr><td>
+    <img src="../img/A5-1.png" width="200">
+</td></tr></table>
 
 <p><strong>Output File Examples:</strong></p>
-<p><img src="../img/A5-2.png" width="200"> </p>
-<p><img src="../img/A5-3.png" width="200"></p>
+<table><tr>
+    <td><img src="../img/A5-2.png" width="200"></td>
+    <td><img src="../img/A5-3.png" width="200"></td>
+</tr></table>
 
 <p><strong>Command Line Argument Errors:</strong></p>
-<p><img src="../img/{$invertedImages['A5-4.png']}" width="200"></p>
-<p><img src="../img/{$invertedImages['A5-5.png']}" width="200"></p>
-<p><img src="../img/{$invertedImages['A5-6.png']}" width="200"></p>
+<table><tr>
+    <td><img src="../img/{$invertedImages['A5-4.png']}" width="200"></td>
+    <td><img src="../img/{$invertedImages['A5-5.png']}" width="200"></td>
+</tr></table>
+<table><tr><td>
+    <img src="../img/{$invertedImages['A5-6.png']}" width="200">
+</td></tr></table>
 
 <p><strong>File Errors:</strong></p>
-<p><img src="../img/{$invertedImages['A5-7.png']}" width="200"></p>
-<p><img src="../img/{$invertedImages['A5-8.png']}" width="200"></p>
+<table><tr>
+    <td><img src="../img/{$invertedImages['A5-7.png']}" width="200"></td>
+    <td><img src="../img/{$invertedImages['A5-8.png']}" width="200"></td>
+</tr></table>
 
 <p><strong>Game Play Examples:</strong></p>
-<p><img src="../img/{$invertedImages['A5-9.png']}" width="200"></p>
-<p><img src="../img/{$invertedImages['A5-10.png']}" width="200"></p>
-<p><img src="../img/{$invertedImages['A5-11.png']}" width="200"></p>
+<table><tr>
+    <td><img src="../img/{$invertedImages['A5-9.png']}" width="200"></td>
+    <td><img src="../img/{$invertedImages['A5-10.png']}" width="200"></td>
+</tr></table>
+<table><tr><td>
+    <img src="../img/{$invertedImages['A5-11.png']}" width="200">
+</td></tr></table>
 
 <p><strong>Input Validation:</strong></p>
-<p><img src="../img/{$invertedImages['A5-12.png']}" width="200"></p>
+<table><tr><td>
+    <img src="../img/{$invertedImages['A5-12.png']}" width="200">
+</td></tr></table>
 
 <p><strong>Longer Word Example:</strong></p>
-<p><img src="../img/{$invertedImages['A5-13.png']}" width="200"></p>
+<table><tr><td>
+    <img src="../img/{$invertedImages['A5-13.png']}" width="200">
+</td></tr></table>
 
 <h4>SUBMISSION INSTRUCTIONS</h4>
 <p>Submit via video recording demonstrating your working program as outlined in Brightspace.</p>
