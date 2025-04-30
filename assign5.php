@@ -3,7 +3,10 @@
 <h5>Input/Output, Files, Command Line Arguments and Dynamic Memory</h5>
 <p>PROG 2007: Programming II<br>
 <strong>Due as posted in Brightspace</strong></p>
-
+<?php 
+    $startCharArr = ["spaces (\" \")", "underscores (\"_\")", "asterisks (\"*\")", "hyphens (\"-\")", "periods (\".\")", "tildes (\"~\")"];
+    $startChar = $startCharArr[rand(0,5)];
+?>
 <div class="row">
 <div class="col-lg-6">
 <h5>Important Notes</h5>
@@ -30,7 +33,7 @@
     <li>You will be provided with 4 input files, each containing different settings for the <strong>word size</strong> and <strong>maximum number of guesses</strong> on the first line with the <strong>solution or target word</strong> on the second line of the file:
         <img src="img/A5-1.png" alt="Assign 5 Word File One" class="lab-image mb-0 pb-0">
     </li>
-    <li>Read the first line and dynamically create/allocate a 2-dimensional character array of the appropriate size for the game board based on the word size and number of guesses, then populate the array with <strong>reasonable starting characters</strong>, such as the <strong>underscore</strong> that I have used in the examples below. <strong>You should dynamically allocate the array in main.c and pass it into functions contained in wordle.c for game processing and/or game board display.</strong></li>
+    <li>Read the first line and dynamically create/allocate a 2-dimensional character array of the appropriate size for the game board based on the word size and number of guesses, then populate the array with <strong><?php echo($startChar) ?></strong> as the starting character. <strong>You should dynamically allocate the array in main.c and pass it into functions contained in wordle.c for game processing and/or game board display.</strong></li>
     <li>See the <strong>General Game Play</strong> section below for details on how the user actually plays the game</li>
     <li>When the player is done, write the game results (i.e. final game board state) to a new file with a line at the top showing whether they were successful or not. The output file will not contain coloured text:
         <img src="img/A5-2.png" alt="Assign 5 Game Result One" class="lab-image mb-0 pb-0">
@@ -66,6 +69,11 @@
 </ul>
 
 <h5>Sample Outputs:</h5>
+<?php
+if($startChar != ("underscores (\"_\")")){
+    echo("<p><strong>NOTE:</strong> These examples use underscores as the starting character, your program should use $startChar as a starting character.</p>");
+}
+?>
 <p class="mb-0 pb-0">Running Program with no Command Line Arguments:</p>
 <img src="img/A5-4.png" alt="Assign 5 No Command Line Arguments" class="lab-image">
 
