@@ -79,9 +79,12 @@ Call it from the main function to make sure it works.
 <p>
 Then create a <strong>new function</strong> that takes in the year and a numeric code for a month, i.e. 1 = January, 2 = February, and so forth. Have it return the number of days in that month. <strong>Make sure to make use of your new leap year function so you can correctly tell if February has 28 or 29 days that year</strong>.
 </p>
-
+<?php
+$currentYear = (int)date('Y');
+$startYear = $currentYear - (rand(10,30));
+?>
 <p>
-Also, return a message of "Bad year" if a year between 1 and 9999 not entered and return 1 error code.
+Also, return a message of "Bad year" if a year between <?php echo ($startYear);?> and <?php echo ($currentYear);?> not entered and return 1 error code.
 </p>
 
 <p>
