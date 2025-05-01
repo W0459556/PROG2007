@@ -1,6 +1,7 @@
 <?php
 require("/home/breanna/public_html/config.php");
 require_once('/home/breanna/public_html/html/tcpdf/tcpdf.php');
+require_once('/home/breanna/public_html/html/tcpdf/tcpdf_import.php');
 
 putenv('GDFONTPATH=' . realpath('/var/www/html'));
 

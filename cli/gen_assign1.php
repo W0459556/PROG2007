@@ -1,13 +1,48 @@
 <?php
-
 require("/home/breanna/public_html/config.php");
 require_once('/home/breanna/public_html/html/tcpdf/tcpdf.php');
 
 putenv('GDFONTPATH=' . realpath('/var/www/html'));
 
-function generateAssignmentPDF($student_id, $student_name){
-    global $db;
+function generateForLoopTable($max){
+    $table = str_pad('N', 5);
+    for($i = 1; $i <= $max; $i++){
+        $table .= str_pad($i, 5);
+    }
+    $table .= "\n";
+    for($i = 1; $i <= $max; $i++){
+        $table .= str_pad($i, 5);
+        for($j = 1; $j <= $max; $j++){
+            $table .= str_pad($i * $j, 5);
+        }
+        $table .= "\n";
+    }
+    return $table;
+}
 
+function generateWhileLoopTable($max){
+    $table = str_pad('N', 5);
+    $i = $max;
+    while($i >= 1){
+        $table .= str_pad($i, 5);
+        $i--;
+    }
+    $table .= "\n";
+    $i = $max;
+    while($i >= 1){
+        $table .= str_pad($i, 5);
+        $j = $max;
+        while($j >= 1){
+            $table .= str_pad($i * $j, 5);
+            $j--;
+        }
+        $table .= "\n";
+        $i--;
+    }
+    return $table;
+}
+
+function generateAssignmentPDF($student_id, $student_name, &$mergedPdf = null){
     $pdf = new TCPDF(PDF_PAGE_ORIENTATION, 'mm', PDF_PAGE_FORMAT, true, 'UTF-8', false);
     $pdf->SetAuthor('NSCC PROG2007');
     $pdf->SetTitle('PROG2007 - Assignment 1');
@@ -64,72 +99,62 @@ HTML;
 <p><strong>NOTE:</strong> MAKE SURE TO SHOW EVERYTHING IN THE VIDEO SUBMISSION CHECKLIST STEP-BY-STEP. YOU WILL NEED AUDIO IN THE VIDEO FOR AT LEAST THE CODE REVIEW PORTION OF THE CHECKLIST</p>
 HTML;
 
-    $pdf->writeHTML($content, true, false, true, false, '');
-    $totalPages = $pdf->getNumPages();
-    if($totalPages%2 != 0){
-        $pdf->AddPage();
+$pdf->writeHTML($content, true, false, true, false, '');
+if($pdf->getNumPages() % 2 != 0){
+    $pdf->AddPage();
+}
+$individualPath = "/home/breanna/public_html/html/prog2007/cli/output/$student_id.pdf";
+$pdf->Output($individualPath, 'F');
+
+if($mergedPdf !== null){
+    $currentPage = $mergedPdf->getPage();
+    if($currentPage > 0 && $currentPage % 2 == 0){
+        $mergedPdf->AddPage();
     }
-    $pdf->Output("/home/breanna/public_html/html/prog2007/cli/output/$student_id.pdf", 'F');
+    if($mergedPdf->getNumPages() == 0){
+        $mergedPdf->AddPage();
+    }
+    $mergedPdf->writeHTML('<h2>Student: '.$student_name.' (ID: '.$student_id.')</h2>', true, false, true, false, '');
+    $mergedPdf->writeHTML($content, true, false, true, false, '');
 }
 
-function generateForLoopTable($max){
-    $table = str_pad('N', 5);
-    for($i = 1; $i <= $max; $i++){
-        $table .= str_pad($i, 5);
-    }
-    $table .= "\n";
-    for($i = 1; $i <= $max; $i++){
-        $table .= str_pad($i, 5);
-        for($j = 1; $j <= $max; $j++){
-            $table .= str_pad($i * $j, 5);
-        }
-        $table .= "\n";
-    }
-    return $table;
-}
-function generateWhileLoopTable($max){
-    $table = str_pad('N', 5);
-    $i = $max;
-    while($i >= 1){
-        $table .= str_pad($i, 5);
-        $i--;
-    }
-    $table .= "\n";
-    $i = $max;
-    while($i >= 1){
-        $table .= str_pad($i, 5);
-        $j = $max;
-        while($j >= 1){
-            $table .= str_pad($i * $j, 5);
-            $j--;
-        }
-        $table .= "\n";
-        $i--;
-    }
-    
-    return $table;
+return $individualPath;
 }
 
+try {
+$db = connect_db();
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-try{
-    $db = connect_db();
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch(PDOException $e){
-    die("Connection failed: " . $e->getMessage());
-}
-
-
-$fetch_students = $db->query("SELECT * FROM student WHERE course='prog2007'");
+$mergedPdf = new TCPDF(PDF_PAGE_ORIENTATION, 'mm', PDF_PAGE_FORMAT, true, 'UTF-8', false);
+$mergedPdf->SetAuthor('NSCC PROG2007');
+$mergedPdf->SetTitle('PROG2007 - All Assignments');
+$mergedPdf->setPrintHeader(false);
+$mergedPdf->setPrintFooter(true);
+$mergedPdf->setFooterData(array(0,64,0), array(0,64,128));
+$mergedPdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+$mergedPdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 
 $counter = 0;
-while($row = $fetch_students->fetch(PDO::FETCH_ASSOC)){
+$fetch_students = $db->query("SELECT * FROM student WHERE course='prog2007'");
+
+while($row = $fetch_students->fetch(PDO::FETCH_ASSOC)) {
     $student_id = $row['id'];
     $student_name = $row['name'];
     
     echo "Generating PDF for " . $student_id . " " . $student_name ."\n";
-    generateAssignmentPDF($student_id, $student_name);
+    generateAssignmentPDF($student_id, $student_name, $mergedPdf);
     $counter++;
 }
 
+if($counter > 0){
+    $mergedPath = "/home/breanna/public_html/html/prog2007/cli/output/ASSIGN1.pdf";
+    $mergedPdf->Output($mergedPath, 'F');
+    echo "Created merged PDF: ASSIGN1.pdf\n";
+}
+
 echo "Finished output of " . $counter . " assignments.\n";
+
+} catch(PDOException $e) {
+die("Connection failed: " . $e->getMessage());
+}
 ?>

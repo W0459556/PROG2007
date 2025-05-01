@@ -9,7 +9,7 @@
 </head>
 <?php
 function generateLetterCountExample() {
-    // sample text from Section 1.10.32, 1.10.33 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
+    // sample text from section 1.10.32, 1.10.33 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
     $lorem = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.";
     
     $words = preg_split('/\s+/', $lorem);
@@ -172,20 +172,19 @@ You should see the following output using these inputs and tests #1 and #3 shoul
 </p>
 
 <div class="row gx-5">  <!-- Added gx-5 for wide gutter -->
-<div class="col-md-6">
+<div class="col-lg-6 pb-2">
 <div class="bg-dark p-3 text-light">
 <pre><code class="text-light">
 <?php echo htmlspecialchars(generateLetterCountExample()); ?></code></pre>
 </div>
 </div>
-<div class="col-md-6">
+<div class="col-lg-6 pb-2">
 <div class="bg-dark p-3 text-light">
 <pre><code class="text-light">
 <?php echo htmlspecialchars(generateLetterCountExample()); ?></code></pre>
 </div>
 </div>
 </div>
-<br />
 
 <p>
 <strong>NOTE:</strong> Try to understand how my "Block 1" code reads in an entire sentence and a character afterwards even if a newline might still be in the input buffer. You may also want to look for the include and the code that always outputs the letter in uppercase.
@@ -215,21 +214,19 @@ You should see the following output using these inputs and all tests should now 
 </p>
 
 <div class="row gx-5">  <!-- Added gx-5 for wide gutter -->
-    <div class="col-md-6">
-        <div class="bg-dark p-3 text-light">
-            <pre><code class="text-light">
+<div class="col-lg-6 pb-2">
+<div class="bg-dark p-3 text-light">
+<pre><code class="text-light">
 <?php echo htmlspecialchars(generateLetterAndWordCountExample()); ?></code></pre>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="bg-dark p-3 text-light">
-            <pre><code class="text-light">
-<?php echo htmlspecialchars(generateLetterAndWordCountExample()); ?></code></pre>
-        </div>
-    </div>
 </div>
-<br />
-<br />
+</div>
+<div class="col-lg-6 pb-2">
+<div class="bg-dark p-3 text-light">
+<pre><code class="text-light">
+<?php echo htmlspecialchars(generateLetterAndWordCountExample()); ?></code></pre>
+</div>
+</div>
+</div>
 
 <h5>Examples and Testing</h5>
 <p>The program should handle string operations correctly.
