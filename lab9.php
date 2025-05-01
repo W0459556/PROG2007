@@ -7,7 +7,89 @@
     <style>
     </style>
 </head>
+<?php
+function generateLetterCountExample() {
+    // sample text from Section 1.10.32, 1.10.33 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
+    $lorem = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.";
+    
+    $words = preg_split('/\s+/', $lorem);
+    $excerpt = ucfirst(implode(' ', array_slice($words, rand(0, count($words)-10), rand(4, 10))));
+    
+    $letter = chr(rand(65, 90)); // A-Z ASCII
+    
+    $count = substr_count(strtoupper($excerpt), strtoupper($letter));
+    
+    $block = 
+"C:\\PROG2007\\EX9\\cmake-build-debug\\EX9.exe
+Enter the sentence to search:
+$excerpt
+Enter the letter to count:\n";
 
+// randomise if inputted letter is upper or lower
+$isLower = rand(1,2);
+if($isLower == 1){
+    $block .= strtolower($letter);
+}else{
+    $block .= $letter;
+}
+
+// logic to handle grammar re: singular, plural
+if($count == 1){
+    $block .= "\nThere is $count $letter letter in '$excerpt'";
+}else{
+    $block .= "\nThere are $count $letter letters in '$excerpt'";
+}
+$block .= "\n\nProcess finished with exit code 0";
+
+return $block;
+}
+?>
+
+<?php
+function generateLetterAndWordCountExample() {
+    $lorem = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.";
+    
+    $words = preg_split('/\s+/', $lorem);
+    $excerptWords = array_slice($words, rand(0, count($words)-10), rand(4, 10));
+    $excerpt = ucfirst(implode(' ', $excerptWords));
+    
+    $letter = chr(rand(65, 90)); // A-Z ASCII
+    $count = substr_count(strtoupper($excerpt), strtoupper($letter));
+    
+    $output = "C:\\PROG2007\\EX9\\cmake-build-debug\\EX9.exe\n";
+    $output .= "Enter the sentence to search:\n";
+    $output .= $excerpt . "\n";
+    $output .= "Enter the letter to count:\n";
+    
+    $output .= (rand(1,2) == 1 ? strtolower($letter) : $letter);
+    $output .= "\nThere " . ($count == 1 ? "is $count $letter letter" : "are $count $letter letters") . " in '$excerpt'\n\n";
+    
+    $output .= "Enter the word to search for:\n";
+    
+    $searchWord = rand(0,1) ? $excerptWords[array_rand($excerptWords)] : $words[array_rand($words)];
+    
+    $searchWord = preg_replace('/[.,?]$/', '', $searchWord);
+    
+    $case = rand(1,4);
+    if ($case == 1) {
+        $searchWord = strtoupper($searchWord);
+    } elseif ($case == 2) {
+        $searchWord = strtolower($searchWord);
+    }
+    
+    $output .= $searchWord . "\n\n";
+    
+    $wordExists = in_array($searchWord, $excerptWords, true) || 
+                 in_array(preg_replace('/[.,?]$/', '', $searchWord), array_map(function($w) { 
+                     return preg_replace('/[.,?]$/', '', $w); 
+                 }, $excerptWords), true);
+    
+    $output .= "$searchWord in '$excerpt': " . ($wordExists ? 'true' : 'false') . "\n\n";
+    $output .= "Process finished with exit code 0";
+    
+    return $output;
+}
+?>
 <body>
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
@@ -90,32 +172,18 @@ You should see the following output using these inputs and tests #1 and #3 shoul
 </p>
 
 <div class="row gx-5">  <!-- Added gx-5 for wide gutter -->
-    <div class="col-md-6">
-        <div class="bg-dark p-3 text-light">
-            <pre><code class="text-light">
-C:\PROG2007\EX9\cmake-build-debug\EX9.exe
-Enter the sentence to search:
-I code therefore I am
-Enter the letter to count:
-E
-There are 4 E letters in 'I code therefore I am'
-
-Process finished with exit code 0</code></pre>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="bg-dark p-3 text-light">
-            <pre><code class="text-light">
-C:\PROG2007\EX9\cmake-build-debug\EX9.exe
-Enter the sentence to search:
-Imagination is more important than knowledge
-Enter the letter to count:
-i
-There are 5 I letters in 'Imagination is more important than knowledge'
-
-Process finished with exit code 0</code></pre>
-        </div>
-    </div>
+<div class="col-md-6">
+<div class="bg-dark p-3 text-light">
+<pre><code class="text-light">
+<?php echo htmlspecialchars(generateLetterCountExample()); ?></code></pre>
+</div>
+</div>
+<div class="col-md-6">
+<div class="bg-dark p-3 text-light">
+<pre><code class="text-light">
+<?php echo htmlspecialchars(generateLetterCountExample()); ?></code></pre>
+</div>
+</div>
 </div>
 <br />
 
@@ -150,37 +218,13 @@ You should see the following output using these inputs and all tests should now 
     <div class="col-md-6">
         <div class="bg-dark p-3 text-light">
             <pre><code class="text-light">
-C:\PROG2007\EX9\cmake-build-debug\EX9.exe
-Enter the sentence to search:
-I code therefore I am
-Enter the letter to count:
-E
-There are 4 E letters in 'I code therefore I am'
-
-Enter the word to search for:
-program
-
-program in 'I code therefore I am': false
-
-Process finished with exit code 0</code></pre>
+<?php echo htmlspecialchars(generateLetterAndWordCountExample()); ?></code></pre>
         </div>
     </div>
     <div class="col-md-6">
         <div class="bg-dark p-3 text-light">
             <pre><code class="text-light">
-C:\PROG2007\EX9\cmake-build-debug\EX9.exe
-Enter the sentence to search:
-Imagination is more important than knowledge
-Enter the letter to count:
-i
-There are 5 I letters in 'Imagination is more important than knowledge'
-
-Enter the word to search for:
-MORE
-
-MORE in 'Imagination is more important than knowledge': true
-
-Process finished with exit code 0</code></pre>
+<?php echo htmlspecialchars(generateLetterAndWordCountExample()); ?></code></pre>
         </div>
     </div>
 </div>

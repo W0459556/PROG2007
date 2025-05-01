@@ -153,7 +153,8 @@ Implement that function in a new source file called <strong>"src/highScores.c"</
 
 Sample of proper input of <?php echo count($players); ?> scores:
 <div class="bg-dark p-3 text-light">
-<pre><code class="text-light"><?php echo htmlspecialchars($output); ?></code></pre>
+<pre><code class="text-light">
+<?php echo htmlspecialchars($output); ?></code></pre>
 </div>
 
 
