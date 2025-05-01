@@ -9,6 +9,67 @@
     </style>
 </head>
 
+<?php
+require("/home/breanna/public_html/config.php");
+mt_srand();
+$db = connect_db();
+
+$playerCount = rand(2, 5);
+$names = $db->query("SELECT name FROM user_names ORDER BY RAND() LIMIT $playerCount")->fetchAll(PDO::FETCH_COLUMN);
+
+$players = [];
+foreach ($names as $name) {
+    $username = $name . rand(1, 2000);
+    $score = rand(1000, 9999);
+    $month = rand(1, 12);
+    $day = rand(1, 28);
+    $year = rand(2020, 2025);
+    
+    $players[] = [
+        'username' => $username,
+        'score' => $score,
+        'month' => $month,
+        'day' => $day,
+        'year' => $year
+    ];
+}
+
+usort($players, function($a, $b) {
+    return $b['score'] - $a['score'];
+});
+
+$maxUsernameLength = max(array_map('strlen', array_column($players, 'username')));
+$usernamePadding = $maxUsernameLength + 3;
+$scorePadding = 8; 
+
+$output = "C:\\PROG2007\\EX7\\cmake-build-debug\\EX7.exe\n\n";
+
+foreach ($players as $player) {
+    $output .= "Enter the player name (Q to quit):" . $player['username'] . "\n";
+    $output .= "Enter the score: " . $player['score'] . "\n";
+    $output .= "Enter the month: " . $player['month'] . "\n";
+    $output .= "Enter the day: " . $player['day'] . "\n";
+    $output .= "Enter the year: " . $player['year'] . "\n\n";
+}
+
+$output .= "Enter the player name (Q to quit):Q\n";
+$output .= "Quitting...\n\n";
+$output .= "High Scores\n\n";
+
+foreach ($players as $player) {
+    $output .= sprintf("%-{$usernamePadding}s %-{$scorePadding}d %d/%d/%d\n", 
+        $player['username'], 
+        $player['score'],
+        $player['month'],
+        $player['day'],
+        $player['year']
+    );
+}
+
+$output .= "\nProcess finished with exit code 0";
+?>
+
+
 <body>
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
@@ -90,32 +151,9 @@ Implement that function in a new source file called <strong>"src/highScores.c"</
 <div class="col-lg-5">
 
 
-Sample of proper input of 2 scores:
+Sample of proper input of <?php echo count($players); ?> scores:
 <div class="bg-dark p-3 text-light">
-<pre><code class="text-light">
-C:\PROG2007\EX7\cmake-build-debug\EX7.exe
-
-Enter the player name (Q to quit):Mario
-Enter the score: 78500
-Enter the month: 3
-Enter the day: 18
-Enter the year: 2019
-
-Enter the player name (Q to quit):Luigi
-Enter the score: 50000
-Enter the month: 12
-Enter the day: 25
-Enter the year: 2018
-
-Enter the player name (Q to quit):Q
-Quitting...
-
-High Scores
-
-Mario   78500   4/18/2019
-Luigi   50000   12/25/2018
-
-Process finished with exit code 0</code></pre>
+<pre><code class="text-light"><?php echo htmlspecialchars($output); ?></code></pre>
 </div>
 
 
