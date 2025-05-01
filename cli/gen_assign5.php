@@ -73,6 +73,10 @@ function generateAssignmentPDF($student_id, $student_name) {
 
     $content = generateAssignmentContent($student_id, $student_name, $invertedImages);
     $pdf->writeHTML($content, true, false, true, false, '');
+    $totalPages = $pdf->getNumPages();
+    if($totalPages%2 != 0){
+        $pdf->AddPage();
+    }
     $pdf->Output("/home/breanna/public_html/html/prog2007/cli/output/$student_id.pdf", 'F');
 }
 
