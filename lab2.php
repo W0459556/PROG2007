@@ -93,7 +93,7 @@ and outputs the result of <strong>adding</strong>, <strong>subtracting</strong>,
 
 <h5>Desired Output</h5>
 <div class="row">
-<div class="col-lg-5">
+<div class="col-lg-6">
 <div class="bg-dark p-3 text-light">
 <pre><code class="text-light">
 The sum of <?php echo($val1) ?> and <?php echo($val2) ?> is <?php echo(round(($val2 + $val1), 2)); ?>
@@ -114,7 +114,7 @@ The result of dividing <?php echo($val1) ?> by <?php echo($val2) ?> is <?php ech
 
 <p>Then, uncomment and fix the indicated block of code. It should now include:</p>
 <div class="row">
-    <div class="col-lg-5">
+    <div class="col-lg-6">
         <div class="bg-dark p-3 text-light">
             <pre><code class="text-light">
 The answer is 43</code></pre>
@@ -125,7 +125,7 @@ The answer is 43</code></pre>
 <br />
 <h5>Sample Output</h5>
                                 <div class="row">
-                                    <div class="col-lg-5">
+                                    <div class="col-lg-6">
                                         <div class="bg-dark p-3 text-light">
                                             <pre><code class="text-light">
 C:\PROG2007\EX2\cmake-build-debug\EX2.exe
