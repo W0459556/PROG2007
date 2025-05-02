@@ -212,7 +212,7 @@ try {
     }
     
     if($counter > 0){
-        $mergedPath = "/home/breanna/public_html/html/prog2007/cli/output/ASSIGN3_ALL.pdf";
+        $mergedPath = "/home/breanna/public_html/html/prog2007/cli/output/ASSIGN3.pdf";
         $mergedPdf->Output($mergedPath, 'F');
         echo "Created merged PDF: ASSIGN3.pdf\n";
     }

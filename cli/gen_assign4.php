@@ -1,7 +1,6 @@
 <?php
 require("/home/breanna/public_html/config.php");
 require_once('/home/breanna/public_html/html/tcpdf/tcpdf.php');
-require_once('/home/breanna/public_html/html/tcpdf/tcpdf_import.php');
 
 putenv('GDFONTPATH=' . realpath('/var/www/html'));
 
@@ -54,10 +53,10 @@ foreach ($imageFiles as $file) {
 function applyShift($char, $shift) {
     $code = ord($char);
     $ranges = [
-        ['start' => 48, 'end' => 57],   // 0-9
-        ['start' => 65, 'end' => 90],   // A-Z
-        ['start' => 33, 'end' => 47],   // !-/
-        ['start' => 58, 'end' => 64]    // :-@
+        ['start' => 48, 'end' => 57],   
+        ['start' => 65, 'end' => 90],   
+        ['start' => 33, 'end' => 47],   
+        ['start' => 58, 'end' => 64]    
     ];
     
     foreach ($ranges as $range) {
@@ -72,7 +71,7 @@ function applyShift($char, $shift) {
     return $char;
 }
 
-function generateAssignmentPDF($student_id, $student_name) {
+function generateAssignmentPDF($student_id, $student_name, &$mergedPdf = null) {
     global $invertedImages;
 
     $pdf = new TCPDF(PDF_PAGE_ORIENTATION, 'mm', PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -89,11 +88,38 @@ function generateAssignmentPDF($student_id, $student_name) {
 
     $content = generateAssignmentContent($student_id, $student_name, $invertedImages);
     $pdf->writeHTML($content, true, false, true, false, '');
-    $totalPages = $pdf->getNumPages();
-    if($totalPages%2 != 0){
+    
+    if($pdf->getNumPages() % 2 != 0){
         $pdf->AddPage();
     }
-    $pdf->Output("/home/breanna/public_html/html/prog2007/cli/output/$student_id.pdf", 'F');
+    
+    $individualPath = "/home/breanna/public_html/html/prog2007/cli/output/$student_id.pdf";
+    $pdf->Output($individualPath, 'F');
+    
+    
+    if($mergedPdf !== null){
+        $currentPages = $mergedPdf->getNumPages();
+        
+        if($currentPages == 0) {
+            $mergedPdf->AddPage();
+            $mergedPdf->writeHTML('<h2>Student: '.$student_name.' (ID: '.$student_id.')</h2>', true, false, true, false, '');
+            $mergedPdf->writeHTML($content, true, false, true, false, '');
+        } 
+        else {
+            if($currentPages % 2 == 1) {
+                $mergedPdf->AddPage();
+            }
+            
+            $mergedPdf->writeHTML('<h2 style="page-break-before: always;">Student: '.$student_name.' (ID: '.$student_id.')</h2>', true, false, true, false, '');
+            $mergedPdf->writeHTML($content, true, false, true, false, '');
+        }
+        
+        if($mergedPdf->getNumPages() % 2 == 1){
+            $mergedPdf->AddPage();
+        }
+    }
+    
+    return $individualPath;
 }
 
 function generateAssignmentContent($student_id, $student_name, $invertedImages) {
@@ -109,7 +135,6 @@ function generateAssignmentContent($student_id, $student_name, $invertedImages) 
 <hr style="width: 99%; align: left; border: 1px black solid;">
 <h3>Operating with Bits, the PreProcessor and Enumerated Types</h3>
 <p>Write a C program that implements a magic decoder ring using bit operations and encryption.</p>
-
 <h4>TASK REQUIREMENTS:</h4>
 <ul>
     <li>Build a program that can encrypt and decrypt text using bit masks and XOR operations</li>
@@ -125,16 +150,12 @@ function generateAssignmentContent($student_id, $student_name, $invertedImages) 
 
 <h4>SAMPLE OUTPUTS</h4>
 <p><strong>NOTE: Your cipher shift is randomized - your output will differ from these examples</strong></p>
-
 <p><strong>Encrypting a message:</strong></p>
-<img src="../img/{$invertedImages['A4-2.png']}" width="585">
-
+<img src="../img/{$invertedImages['A4-2.png']}" width="400">
 <p><strong>Decrypting a message:</strong></p>
-<img src="../img/{$invertedImages['A4-3.png']}" width="585">
-
+<img src="../img/{$invertedImages['A4-3.png']}" width="400">
 <p><strong>Bad input example:</strong></p>
-<img src="../img/{$invertedImages['A4-4.png']}" width="585">
-
+<img src="../img/{$invertedImages['A4-4.png']}" width="400">
 <h4>Submission Instructions</h4>
 <p>Submit via video recording demonstrating your working program as outlined in Brightspace.</p>
 HTML;
@@ -166,12 +187,27 @@ try {
     $db = connect_db();
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
+    $mergedPdf = new TCPDF(PDF_PAGE_ORIENTATION, 'mm', PDF_PAGE_FORMAT, true, 'UTF-8', false);
+    $mergedPdf->SetAuthor('NSCC PROG2007');
+    $mergedPdf->SetTitle('PROG2007 - All Assignments 4');
+    $mergedPdf->setPrintHeader(false);
+    $mergedPdf->setPrintFooter(true);
+    $mergedPdf->setFooterData(array(0,64,0), array(0,64,128));
+    $mergedPdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+    $mergedPdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+    
     $fetch_students = $db->query("SELECT * FROM student WHERE course='prog2007'");
     $counter = 0;
     
     while ($row = $fetch_students->fetch(PDO::FETCH_ASSOC)) {
-        generateAssignmentPDF($row['id'], $row['name']);
+        generateAssignmentPDF($row['id'], $row['name'], $mergedPdf);
         $counter++;
+    }
+    
+    if($counter > 0){
+        $mergedPath = "/home/breanna/public_html/html/prog2007/cli/output/ASSIGN4.pdf";
+        $mergedPdf->Output($mergedPath, 'F');
+        echo "Created merged PDF: ASSIGN4.pdf\n";
     }
     
     echo "Generated $counter assignment PDFs\n";
