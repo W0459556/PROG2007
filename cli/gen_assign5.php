@@ -1,7 +1,6 @@
 <?php
 require("/home/breanna/public_html/config.php");
 require_once('/home/breanna/public_html/html/tcpdf/tcpdf.php');
-require_once('/home/breanna/public_html/html/tcpdf/tcpdf_import.php');
 
 putenv('GDFONTPATH=' . realpath('/var/www/html'));
 
@@ -39,7 +38,6 @@ function createInvertedImage($sourcePath, $destPath) {
     return true;
 }
 
-// List of all image files to be inverted
 $imageFiles = [
     'A5-4.png', 'A5-5.png',
     'A5-6.png', 'A5-7.png', 'A5-8.png', 'A5-9.png', 'A5-10.png',
@@ -57,7 +55,7 @@ foreach ($imageFiles as $file) {
     $invertedImages[$file] = "inverted_$file";
 }
 
-function generateAssignmentPDF($student_id, $student_name) {
+function generateAssignmentPDF($student_id, $student_name, &$mergedPdf = null) {
     global $invertedImages;
 
     $pdf = new TCPDF(PDF_PAGE_ORIENTATION, 'mm', PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -74,11 +72,38 @@ function generateAssignmentPDF($student_id, $student_name) {
 
     $content = generateAssignmentContent($student_id, $student_name, $invertedImages);
     $pdf->writeHTML($content, true, false, true, false, '');
-    $totalPages = $pdf->getNumPages();
-    if($totalPages%2 != 0){
+    
+    if($pdf->getNumPages() % 2 != 0){
         $pdf->AddPage();
     }
-    $pdf->Output("/home/breanna/public_html/html/prog2007/cli/output/$student_id.pdf", 'F');
+    
+    $individualPath = "/home/breanna/public_html/html/prog2007/cli/output/$student_id.pdf";
+    $pdf->Output($individualPath, 'F');
+    
+   
+    if($mergedPdf !== null){
+        $currentPages = $mergedPdf->getNumPages();
+        
+        if($currentPages == 0) {
+            $mergedPdf->AddPage();
+            $mergedPdf->writeHTML('<h2>Student: '.$student_name.' (ID: '.$student_id.')</h2>', true, false, true, false, '');
+            $mergedPdf->writeHTML($content, true, false, true, false, '');
+        } 
+        else {
+            if($currentPages % 2 == 1) {
+                $mergedPdf->AddPage();
+            }
+            
+            $mergedPdf->writeHTML('<h2 style="page-break-before: always;">Student: '.$student_name.' (ID: '.$student_id.')</h2>', true, false, true, false, '');
+            $mergedPdf->writeHTML($content, true, false, true, false, '');
+        }
+        
+        if($mergedPdf->getNumPages() % 2 == 1){
+            $mergedPdf->AddPage();
+        }
+    }
+    
+    return $individualPath;
 }
 
 function generateAssignmentContent($student_id, $student_name, $invertedImages) {
@@ -97,11 +122,9 @@ function generateAssignmentContent($student_id, $student_name, $invertedImages) 
 <p>Write a C program that implements a Wordle-like game using file I/O and dynamic memory allocation.</p>
 
 <h4>IMPORTANT NOTES</h4>
-<h5>Note 1:</h5>
-<p>Four sample input files have been provided in the GitHub repository. Copy these into your build folder for testing.</p>
+<h5>Note 1: Four sample input files have been provided in the GitHub repository. Copy these into your build folder for testing.</h5>
 
-<h5>Note 2:</h5>
-<p>To get ANSI colors showing in CLion:</p>
+<h5>Note 2: To get ANSI colors showing in CLion:</h5>
 <ol>
     <li>Choose Help -> Edit Custom Properties</li>
     <li>Add: <code>run.processes.with.pty=false</code></li>
@@ -128,7 +151,7 @@ function generateAssignmentContent($student_id, $student_name, $invertedImages) 
 </ol>
 
 HTML . ($startChar != "underscores (\"_\")" ? 
-"<p><strong>NOTE:</strong> These examples use underscores as the starting character, your program should use $startChar as a starting character.</p>" : "") . <<<HTML
+"<p><strong>NOTE:</strong>Your program should use $startChar as a starting character, not underscores (\"_\")</p>" : "") . <<<HTML
 <p><strong>Input File Example:</strong></p>
 <table><tr><td>
     <img src="../img/A5-1.png" width="200">
@@ -164,15 +187,16 @@ HTML . ($startChar != "underscores (\"_\")" ?
     <img src="../img/{$invertedImages['A5-11.png']}" width="200">
 </td></tr></table>
 
-<p><strong>Input Validation:</strong></p>
-<table><tr><td>
-    <img src="../img/{$invertedImages['A5-12.png']}" width="200">
-</td></tr></table>
-
-<p><strong>Longer Word Example:</strong></p>
-<table><tr><td>
-    <img src="../img/{$invertedImages['A5-13.png']}" width="200">
-</td></tr></table>
+<table><tr>
+    <td>
+        <p><strong>Input Validation:</strong></p>
+        <img src="../img/{$invertedImages['A5-12.png']}" width="200">
+    </td>
+    <td>
+        <p><strong>Longer Word Example:</strong></p>
+        <img src="../img/{$invertedImages['A5-13.png']}" width="200">
+    </td>
+</tr></table>
 
 <h4>SUBMISSION INSTRUCTIONS</h4>
 <p>Submit via video recording demonstrating your working program as outlined in Brightspace.</p>
@@ -183,12 +207,27 @@ try {
     $db = connect_db();
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
+    $mergedPdf = new TCPDF(PDF_PAGE_ORIENTATION, 'mm', PDF_PAGE_FORMAT, true, 'UTF-8', false);
+    $mergedPdf->SetAuthor('NSCC PROG2007');
+    $mergedPdf->SetTitle('PROG2007 - All Assignments 5');
+    $mergedPdf->setPrintHeader(false);
+    $mergedPdf->setPrintFooter(true);
+    $mergedPdf->setFooterData(array(0,64,0), array(0,64,128));
+    $mergedPdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+    $mergedPdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+    
     $fetch_students = $db->query("SELECT * FROM student WHERE course='prog2007'");
     $counter = 0;
     
     while ($row = $fetch_students->fetch(PDO::FETCH_ASSOC)) {
-        generateAssignmentPDF($row['id'], $row['name']);
+        generateAssignmentPDF($row['id'], $row['name'], $mergedPdf);
         $counter++;
+    }
+    
+    if($counter > 0){
+        $mergedPath = "/home/breanna/public_html/html/prog2007/cli/output/ASSIGN5.pdf";
+        $mergedPdf->Output($mergedPath, 'F');
+        echo "Created merged PDF: ASSIGN5.pdf\n";
     }
     
     echo "Generated $counter assignment PDFs\n";
