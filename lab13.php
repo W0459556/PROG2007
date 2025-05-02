@@ -99,7 +99,7 @@ Try to do it yourself, but if stuck you can refer to the example on page 320 in 
 
 <h5>REMINDERs:</h5>
 <ul>
-    <li>Return a message of "Bad year" if a year between 1 and 9999 is not entered and return 1 error code.</li>
+    <li>Return a message of "Bad year" if a year outside of the range you were given in lab 6 is not entered and return 1 error code.</li>
     <li>Return a message of "Bad month" if a month between 1 and 12 is not entered and return 1 error code.</li>
     <li>"30 days has September, April, June, and November".</li>
 </ul>
