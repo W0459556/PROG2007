@@ -8,6 +8,61 @@
     </style>
 </head>
 
+
+<?php
+$randRecords = rand(3, 6);
+$randStudents = rand(2, 4);
+
+require("/home/breanna/public_html/config.php");
+mt_srand();
+$db = connect_db();
+
+// $operation = $db->query("SELECT op_code, op_name FROM prog2007_lab16 ORDER BY RAND() LIMIT 1")->fetchAll(PDO::FETCH_ASSOC);
+$operation = [
+    [
+        "-s",
+        "-a",
+        "-mx",
+        "-mn",
+    ],
+    [
+        "sum",
+        "average",
+        "maximum",
+        "minimum",
+    ],
+];
+
+$s = rand(0,3);
+// $opCode = $operation['op_code'];
+// $opName = $operation['op_name'];
+
+$opCode = $operation[0][$s];
+$opName = $operation[1][$s];
+
+$arraySize = rand(4,10);
+$values = [];
+for ($i = 0; $i < $arraySize; $i++) {
+    $values[] = rand(-500, 1000);
+}
+
+switch ($opCode) {
+    case '-s':
+        $result = array_sum($values);
+        break;
+    case '-a':
+        $result = array_sum($values) / count($values);
+        break;
+    case '-mx':
+        $result = max($values);
+        break;
+    case '-mn':
+        $result = min($values);
+        break;
+}
+
+$result = number_format($result, 1);
+?>
 <body>
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
@@ -78,11 +133,8 @@ Our program will work based on command line arguments with the following format:
 </p>
 
 <p>
-<strong>Operations:</strong><br>
-<strong>-s</strong> = sum<br>
-<strong>-a</strong> = average<br>
-<strong>-mx</strong> = maximum<br>
-<strong>-mn</strong> = minimum
+<strong>Operation:</strong><br>
+<strong><?php echo ($opCode)?></strong> = <?php echo ($opName)?><br>
 </p>
 
 <p>
@@ -95,27 +147,80 @@ If proper arguments are used, show the result to one decimal place.
 
 <h5>Sample Outputs</h5>
 <div class="row">
-    <div class="col-lg-6 image-container">
-        <p class="mb-0 pb-0">Sample of improper number of command line arguments:</p>
-        <img src="img/16-1.png" alt="Improper Number of Command Line Arguments" class="lab-image">
-        
-        <p class="mb-0 pb-0">Sample of improper operator:</p>
-        <img src="img/16-2.png" alt="Improper Operator" class="lab-image">
-        
-        <p class="mb-0 pb-0">Sample of finding array sum:</p>
-        <img src="img/16-3.png" alt="Array Sum" class="lab-image">
-        
-        <p class="mb-0 pb-0">Sample of finding array average:</p>
-        <img src="img/16-4.png" alt="Array Average" class="lab-image">
-        
-        <p class="mb-0 pb-0">Sample of finding array maximum value:</p>
-        <img src="img/16-5.png" alt="Array Maximum" class="lab-image">
-        
-        <p class="mb-0 pb-0">Sample of finding array minimum value:</p>
-        <img src="img/16-6.png" alt="Array Minimum" class="lab-image">
+    <div class="col-lg-6">
+        <!-- Always show these error examples -->
+        <h5>Improper number of arguments</h5>
+        <div class="bg-dark p-3 text-light"><pre><code class="text-light">
+PS path\to\your\file> .\EX16.exe one
+Sorry, bad number of command line arguments.</code></pre></div>
+        <br />
+
+        <h5>Improper operator</h5>
+        <div class="bg-dark p-3 text-light"><pre><code class="text-light">
+PS path\to\your\file> .\EX16.exe -k 5
+Sorry, bad operator.</code></pre></div>
+        <br />
+
+        <!-- Dynamic examples based on selected operation -->
+        <?php if ($opCode == '-s'): ?>
+        <h5>Array sum</h5>
+        <div class="bg-dark p-3 text-light"><pre><code class="text-light">
+PS path\to\your\file> .\EX16.exe -s <?= $arraySize ?>
+
+<?php foreach ($values as $i => $value): ?>
+Enter value #<?= $i+1 ?>: <?= $value ?>
+
+<?php endforeach; ?>
+
+The result is <?= $result ?>.</code></pre></div>
+        <br />
+        <?php endif; ?>
+
+        <?php if ($opCode == '-a'): ?>
+        <h5>Array average</h5>
+        <div class="bg-dark p-3 text-light"><pre><code class="text-light">
+PS path\to\your\file> .\EX16.exe -a <?= $arraySize ?>
+
+<?php foreach ($values as $i => $value): ?>
+Enter value #<?= $i+1 ?>: <?= $value ?>
+
+<?php endforeach; ?>
+
+The result is <?= $result ?>.</code></pre></div>
+        <br />
+        <?php endif; ?>
+
+        <?php if ($opCode == '-mx'): ?>
+        <h5>Array maximum</h5>
+        <div class="bg-dark p-3 text-light"><pre><code class="text-light">
+PS path\to\your\file> .\EX16.exe -mx <?= $arraySize ?>
+
+<?php foreach ($values as $i => $value): ?>
+Enter value #<?= $i+1 ?>: <?= $value ?>
+
+<?php endforeach; ?>
+
+The result is <?= $result ?>.</code></pre></div>
+        <br />
+        <?php endif; ?>
+
+        <?php if ($opCode == '-mn'): ?>
+        <h5>Array minimum</h5>
+        <div class="bg-dark p-3 text-light"><pre><code class="text-light">
+PS path\to\your\file> .\EX16.exe -mn <?= $arraySize ?>
+
+<?php foreach ($values as $i => $value): ?>
+Enter value #<?= $i+1 ?>: <?= $value ?>
+
+<?php endforeach; ?>
+
+The result is <?= $result ?>.</code></pre></div>
+        <br />
+        <?php endif; ?>
     </div>
 </div>
 
+<br />
 <h5>IMPORTANT NOTES:</h5>
 <p>
 Make use of <strong>all included code</strong> provided in "inc/arrayOps.h" and "src/arrayOps.c" (i.e. implement and use the functions, enums, and variables already provided). Read all of the code comments in UPPERCASE for some help. <strong>Do not forget to properly release the dynamic memory for the array when done with it.</strong>
