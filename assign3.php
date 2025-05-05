@@ -138,7 +138,7 @@ $reportCards = generateReportCards($students);
 <p class="mb-0 pb-0">Student input:</p>
 <div class="bg-dark p-3 text-light">
 <pre><code class="text-light">
-C:\PROG2007\ASSIGN3\cmake-build-debug\ASSIGN3.exe
+path\to\your\file\ASSIGN3.exe
 <?php echo($studentEntryExample) ?>
 Process finished with exit code 0</code></pre>
 </div>
@@ -146,7 +146,7 @@ Process finished with exit code 0</code></pre>
 <p class="mb-0 pb-0">Report cards:</p>
 <div class="bg-dark p-3 text-light">
 <pre><code class="text-light">
-C:\PROG2007\ASSIGN3\cmake-build-debug\ASSIGN3.exe
+path\to\your\file\ASSIGN3.exe
 <?php echo($reportCards) ?>
 Process finished with exit code 0</code></pre>
 </div>

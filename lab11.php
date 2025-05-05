@@ -170,14 +170,14 @@ $ex2 = genEx($op2, $displayOps);
 <div class="col-lg-6">
 <div class="bg-dark p-3 text-light mb-3">
 <pre><code class="text-light">
-C:\PROG2007\EX11\cmake-build-debug\EX11.exe
+path\to\your\file\EX11.exe
 <?php echo ($ex1)?>
 Process finished with exit code 0</code></pre>
 </div>
 
 <div class="bg-dark p-3 text-light mb-3">
 <pre><code class="text-light">
-C:\PROG2007\EX11\cmake-build-debug\EX11.exe
+path\to\your\file\EX11.exe
 <?php echo ($ex2)?>
 Process finished with exit code 0</code></pre>
 </div>
@@ -185,7 +185,7 @@ Process finished with exit code 0</code></pre>
 <h6>Bad Operator</h6>
 <div class="bg-dark p-3 text-light mb-3">
 <pre><code class="text-light">
-C:\PROG2007\EX11\cmake-build-debug\EX11.exe
+path\to\your\file\EX11.exe
 Please enter a positive integer value:
 <?php echo (rand(1,256)); ?>
 
@@ -201,7 +201,7 @@ Process finished with exit code 1</code></pre>
 <h6>Bad Integer</h6>
 <div class="bg-dark p-3 text-light mb-3">
 <pre><code class="text-light">
-C:\PROG2007\EX11\cmake-build-debug\EX11.exe
+path\to\your\file\EX11.exe
 Please enter a positive integer value:
 <?php echo ((rand(1,256))*-1); ?>
 

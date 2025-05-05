@@ -106,12 +106,12 @@ Try to do it yourself, but if stuck you can refer to the example on page 320 in 
 
 <h5>Sample Outputs (which should be the same as Exercise 6):</h5>
 <div class="row">
-<div class="col-lg-5">
+<div class="col-lg-6">
 
 
 Sample of bad year input:
 <div class="bg-dark p-3 text-light"><pre><code class="text-light">
-C:\PROG2007\EX6\cmake-build-debug\EX6.exe
+path\to\your\file\EX6.exe
 Please enter the year: 
 -3
 Bad year
@@ -124,7 +124,7 @@ Process finished with exit code 1</code></pre>
 Sample of bad month input:
 <div class="bg-dark p-3 text-light">
 <pre><code class="text-light">
-C:\PROG2007\EX6\cmake-build-debug\EX6.exe
+path\to\your\file\EX6.exe
 Please enter the year: 
 2021
 Please enter the month:
@@ -139,7 +139,7 @@ Process finished with exit code 1</code></pre>
 Sample of proper input:
 <div class="bg-dark p-3 text-light">
 <pre><code class="text-light">
-C:\PROG2007\EX6\cmake-build-debug\EX6.exe
+path\to\your\file\EX6.exe
 Please enter the year: 
 2021
 Please enter the month:

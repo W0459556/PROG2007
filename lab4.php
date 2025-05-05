@@ -94,7 +94,7 @@ If the program runs successfully (i.e. it did not error out as mentioned above),
         Sample of erroneous negative number input:
         <div class="bg-dark p-3 text-light">
             <pre><code class="text-light">
-C:\PROG2007\EX4\cmake-build-debug\EX4.exe
+path\to\your\file\EX4.exe
 
 Please enter the first number: -8
 Please enter the second number: 6
@@ -107,7 +107,7 @@ Process finished with exit code 1</code></pre>
         Sample of erroneous zero input:
         <div class="bg-dark p-3 text-light">
             <pre><code class="text-light">
-C:\PROG2007\EX4\cmake-build-debug\EX4.exe
+path\to\your\file\EX4.exe
 
 Please enter the first number: 9
 Please enter the second number: 0
@@ -120,7 +120,7 @@ Process finished with exit code 1</code></pre>
         Sample of proper input:
         <div class="bg-dark p-3 text-light">
             <pre><code class="text-light">
-C:\PROG2007\EX4\cmake-build-debug\EX4.exe
+path\to\your\file\EX4.exe
 
 Please enter the first number: 32
 Please enter the second number: 40

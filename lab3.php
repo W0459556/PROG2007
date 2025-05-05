@@ -158,7 +158,7 @@ It is okay to have more decimal places than the test is looking for (only 3).
     <div class="col-lg-5">
         <div class="bg-dark p-3 text-light">
 <pre><code class="text-light">
-C:\PROG2007\EX3\cmake-build-debug\EX3.exe
+path\to\your\file\EX3.exe
 The hitter's OBP is: <?php echo($obp_formatted) ?>
 
 The hitter's SLG is: <?php echo($slg_formatted) ?>

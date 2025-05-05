@@ -95,7 +95,7 @@ At any point, if the user enters a grade that is negative or greater than 100, o
 
 Sample of erroneous negative number input:
 <div class="bg-dark p-3 text-light"><pre><code class="text-light">
-C:\PROG2007\EX5\cmake-build-debug\EX5.exe
+path\to\your\file\EX5.exe
 Please enter Grade 1:
 99
 Please enter Grade 2:
@@ -115,7 +115,7 @@ Process finished with exit code 1</code></pre>
 Sample of erroneous "too high" input:
 <div class="bg-dark p-3 text-light">
 <pre><code class="text-light">
-C:\PROG2007\EX5\cmake-build-debug\EX5.exe
+path\to\your\file\EX5.exe
 Please enter Grade 1:
 83
 Please enter Grade 2:
@@ -141,7 +141,7 @@ $average = array_sum($grades) / count($grades);
 Sample of proper input:
 <div class="bg-dark p-3 text-light">
 <pre><code class="text-light">
-C:\PROG2007\EX5\cmake-build-debug\EX5.exe
+path\to\your\file\EX5.exe
 Please enter Grade 1:
 <?php echo ($grades[0]); ?>
 

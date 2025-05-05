@@ -86,7 +86,7 @@ You should see following output and the first 7 tests should pass:
 Sample of full output:
 <div class="bg-dark p-3 text-light">
 <pre><code class="text-light">
-C:\PROG2007\EX8\cmake-build-debug\EX8.exe
+path\to\your\file\EX8.exe
 The final mark for APPD1001 is a A-.
 The final mark for COMM2700 is a 3.3.
 The final mark for DBAS4002 is a 73.
@@ -125,7 +125,7 @@ Implement that function in a new source file called <strong>"src/termGrades.c"</
 Sample of full output:
 <div class="bg-dark p-3 text-light">
 <pre><code class="text-light">
-C:\PROG2007\EX8\cmake-build-debug\EX8.exe
+path\to\your\file\EX8.exe
 The final mark for APPD1001 is a A-.
 The final mark for COMM2700 is a 3.3.
 The final mark for DBAS4002 is a 73.

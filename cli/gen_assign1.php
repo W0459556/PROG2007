@@ -82,7 +82,7 @@ function generateAssignmentPDF($student_id, $student_name, &$mergedPdf = null){
 
 <h4>SAMPLE OUTPUT</h4>
 <pre style="font-family: courier; font-size: 10pt; background-color: #ffffff; color: #000000; border: 1px solid #cccccc; padding: 10px;">
-C:\PROG2007\ASSIGN1\cmake-build-debug\ASSIGN1.exe
+path\\to\\your\\file\ASSIGN1.exe
 
 TABLE OF PRODUCTS(FOR LOOP)
 HTML;

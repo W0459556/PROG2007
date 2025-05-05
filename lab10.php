@@ -95,7 +95,7 @@ You have already been provided with both a <strong>"src/main.c"</strong> and <st
 
 <div class="bg-dark p-3 text-light">
 <pre><code class="text-light">
-C:\PROG2007\EX10\cmake-build-debug\EX10.exe
+path\to\your\file\EX10.exe
 Student One:
 ID: w5555555 NAME: Trudeau, Justin
 TERM: 2 GPA: 3.57 FULL-TIME: false

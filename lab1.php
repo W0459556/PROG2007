@@ -102,7 +102,7 @@
 <div class="col-lg-5">
 <div class="bg-dark p-3 text-light">
 <pre><code class="text-light">
-C:\PROG2007\EX1\cmake-build-debug\EX1.exe
+path\to\your\file\EX1.exe
 <?php echo($answer); ?>
 
 

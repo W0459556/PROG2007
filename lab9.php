@@ -20,7 +20,7 @@ function generateLetterCountExample() {
     $count = substr_count(strtoupper($excerpt), strtoupper($letter));
     
     $block = 
-"C:\\PROG2007\\EX9\\cmake-build-debug\\EX9.exe
+"path\\to\\your\\file\\EX9.exe
 Enter the sentence to search:
 $excerpt
 Enter the letter to count:\n";
@@ -56,7 +56,7 @@ function generateLetterAndWordCountExample() {
     $letter = chr(rand(65, 90)); // A-Z ASCII
     $count = substr_count(strtoupper($excerpt), strtoupper($letter));
     
-    $output = "C:\\PROG2007\\EX9\\cmake-build-debug\\EX9.exe\n";
+    $output = "path\\to\\your\\file\\EX9.exe\n";
     $output .= "Enter the sentence to search:\n";
     $output .= $excerpt . "\n";
     $output .= "Enter the letter to count:\n";

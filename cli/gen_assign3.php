@@ -139,13 +139,13 @@ function generateAssignmentPDF($student_id, $student_name, &$mergedPdf = null) {
 <h4>SAMPLE OUTPUTS</h4>
 <p><strong>Student input for 1 student:</strong></p>
 <pre style="font-family: courier; font-size: 10pt; background-color: #ffffff; color: #000000; border: 1px solid #cccccc; padding: 10px;">
-C:\PROG2007\ASSIGN3\cmake-build-debug\ASSIGN3.exe
+path\to\your\file\ASSIGN3.exe
 {$studentEntryExample}Process finished with exit code 0
 </pre>
 
 <p><strong>Report card for 1 student:</strong></p>
 <pre style="font-family: courier; font-size: 10pt; background-color: #ffffff; color: #000000; border: 1px solid #cccccc; padding: 10px;">
-C:\PROG2007\ASSIGN3\cmake-build-debug\ASSIGN3.exe
+path\to\your\file\ASSIGN3.exe
 {$reportCards}Process finished with exit code 0
 </pre>
 <p><strong>REMEMER: your assignment should accept inputs & output report cards for $randStudents students.</strong></p>

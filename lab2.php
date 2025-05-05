@@ -128,7 +128,7 @@ The answer is 43</code></pre>
                                     <div class="col-lg-6">
                                         <div class="bg-dark p-3 text-light">
                                             <pre><code class="text-light">
-C:\PROG2007\EX2\cmake-build-debug\EX2.exe
+path\to\your\file\EX2.exe
 The sum of <?php echo($val1) ?> and <?php echo($val2) ?> is <?php echo(round(($val2 + $val1), 2)); ?>
 
 The difference of <?php echo($val1) ?> and <?php echo($val2) ?> is <?php echo(round(($val1 - $val2), 2)); ?>

@@ -42,7 +42,7 @@ $maxUsernameLength = max(array_map('strlen', array_column($players, 'username'))
 $usernamePadding = $maxUsernameLength + 3;
 $scorePadding = 8; 
 
-$output = "C:\\PROG2007\\EX7\\cmake-build-debug\\EX7.exe\n\n";
+$output = "path\\to\\your\\file\\EX7.exe\n\n";
 
 foreach ($players as $player) {
     $output .= "Enter the player name (Q to quit):" . $player['username'] . "\n";

@@ -75,7 +75,7 @@ Write a C program that generates multiplication tables using different loop stru
 <div class="col-lg-6">
 <div class="bg-dark p-3 text-light">
 <pre><code class="text-light">
-C:\PROG2007\ASSIGN1\cmake-build-debug\ASSIGN1.exe
+path\to\your\file\ASSIGN1.exe
 <?php echo $multiplicationTables; ?>
 
 Process finished with exit code 0</code></pre>

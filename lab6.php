@@ -106,7 +106,7 @@ Return a message of "Bad month" if a month between 1 and 12 not entered and retu
 
 Sample of bad year input:
 <div class="bg-dark p-3 text-light"><pre><code class="text-light">
-C:\PROG2007\EX6\cmake-build-debug\EX6.exe
+path\to\your\file\EX6.exe
 Please enter the year: 
 -3
 Bad year
@@ -119,7 +119,7 @@ Process finished with exit code 1</code></pre>
 Sample of bad month input:
 <div class="bg-dark p-3 text-light">
 <pre><code class="text-light">
-C:\PROG2007\EX6\cmake-build-debug\EX6.exe
+path\to\your\file\EX6.exe
 Please enter the year: 
 2021
 Please enter the month:
@@ -134,7 +134,7 @@ Process finished with exit code 1</code></pre>
 Sample of proper input:
 <div class="bg-dark p-3 text-light">
 <pre><code class="text-light">
-C:\PROG2007\EX6\cmake-build-debug\EX6.exe
+path\to\your\file\EX6.exe
 Please enter the year: 
 2021
 Please enter the month:
